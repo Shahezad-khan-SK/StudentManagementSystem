@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Models;
 using StudentManagement.Services;
+using System.Threading.Tasks;
 
 namespace StudentManagement.Controllers
 {
@@ -19,19 +20,31 @@ namespace StudentManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllStudents() =>
-            Ok(await _studentService.GetAllStudents());
+        public async Task<IActionResult> GetAllStudents()
+        {
+            var students = await _studentService.GetAllStudents();
+            return Ok(students);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent(Student student) =>
-            Ok(await _studentService.AddStudent(student));
+        public async Task<IActionResult> AddStudent(Student student)
+        {
+            var addedStudent = await _studentService.AddStudent(student);
+            return Ok(addedStudent);
+        }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStudent(int id, Student student) =>
-            Ok(await _studentService.UpdateStudent(id, student));
+        public async Task<IActionResult> UpdateStudent(int id, Student student)
+        {
+            var updatedStudent = await _studentService.UpdateStudent(id, student);
+            return Ok(updatedStudent);
+        }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStudent(int id) =>
-            Ok(await _studentService.DeleteStudent(id));
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            var result = await _studentService.DeleteStudent(id);
+            return Ok(result);
+        }
     }
 }
