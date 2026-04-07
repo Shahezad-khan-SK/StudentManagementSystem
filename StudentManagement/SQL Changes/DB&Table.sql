@@ -1,0 +1,14 @@
+CREATE DATABASE StudentManagementDB;
+GO
+
+USE StudentManagementDB;
+GO
+
+CREATE TABLE Students (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) UNIQUE NOT NULL,
+    Age INT NOT NULL,
+    Course NVARCHAR(100) NOT NULL,
+    CreatedDate DATETIME DEFAULT GETDATE()
+);

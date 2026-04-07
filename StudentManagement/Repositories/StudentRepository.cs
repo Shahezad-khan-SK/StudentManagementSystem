@@ -2,6 +2,7 @@
 using StudentManagement.Repositories;
 using StudentManagement.Models;
 using StudentManagement.Data;
+using StudentManagement.Services;
 
 
 namespace StudentManagement.Repositories
@@ -9,10 +10,11 @@ namespace StudentManagement.Repositories
     public class StudentRepository : IStudentRepository
     {
         private readonly StudentDbContext _context;
-
-        public StudentRepository(StudentDbContext context)
+        private readonly ILogger<StudentService> _logger;
+        public StudentRepository(StudentDbContext context, ILogger<StudentService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Student>> GetAllStudents()
@@ -27,9 +29,18 @@ namespace StudentManagement.Repositories
 
         public async Task<Student> AddStudent(Student student)
         {
-            _context.Students.Add(student);
-            await _context.SaveChangesAsync();
-            return student;
+            try
+            {
+                _context.Students.Add(student);
+                await _context.SaveChangesAsync();
+                return student;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while adding student: {Name}, {Email}", student.Name, student.Email);
+                throw;
+            }
+
         }
 
         public async Task<Student> UpdateStudent(Student student)
