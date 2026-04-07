@@ -1,6 +1,6 @@
 # StudentManagementSystem
 
-1) Clone the project first
+1) Clone the project first and select the branch "feature/studentmanage"
 2) Go to the clone location and find the "Sql Changes" folder execute the file inside it in sql server
 3) now open the visual studio and open solution file (.sln) from the cloned project
 4) open the appsettings.json file and change the connection string according to your sql server authentication user id and password and          server name also
